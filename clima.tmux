@@ -15,7 +15,16 @@ interpolate() {
 }
 
 main() {
+    # Initialize cache immediately so weather data is available on first load
+    "$CWD/scripts/clima.sh" > /dev/null
+
+    # Interpolate #{clima} in status-right
     interpolate "status-right"
+
+    # Interpolate #{clima} in catppuccin variables if they exist
+    interpolate "@catppuccin_clima_text"
+
+    # Bind key to show weather details
     tmux bind-key -T prefix W show-options -gqv @clima_details_value
 }
 
